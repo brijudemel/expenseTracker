@@ -4,11 +4,13 @@ import ProfileScreen from "../screens/ProfileScreen";
 import StatsScreen from "../screens/StatsScreen";
 import React from 'react';
 import {StyleSheet} from 'react-native';
-//import AntDesign from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/Entypo';
 import Icon3 from 'react-native-vector-icons/Ionicons';
+
+
 const Tab= createBottomTabNavigator();
 const AppStack=()=>{
+    
     return(
         <Tab.Navigator initialRouteName="Home"
             tabBarOptions={{
@@ -30,7 +32,7 @@ const AppStack=()=>{
             options={
                 {
                     tabBarIcon:({focused})=>{
-                    return <Icon2 name='home' size={25} color={focused?'#e32f45':'#748c94'} />;
+                    return <Icon2 name='home' size={25} color={focused?'#009387':'#748c94'} />;
                     }
                 }
             }
@@ -39,7 +41,7 @@ const AppStack=()=>{
             options={
                 {
                     tabBarIcon:({focused})=>{
-                    return <Icon2 name='line-graph' size={25} color={focused?'#e32f45':'#748c94'} />;
+                    return <Icon2 name='line-graph' size={25} color={focused?'#009387':'#748c94'} />;
                     }
                 }
             }
@@ -48,7 +50,7 @@ const AppStack=()=>{
             options={
                 {
                     tabBarIcon:({focused})=>{
-                    return <Icon3 name='person' size={25} color={focused?'#e32f45':'#748c94'} />;
+                    return <Icon3 name='person' size={25} color={focused?'#009387':'#748c94'} />;
                     }
                 }
             }

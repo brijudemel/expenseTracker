@@ -5,9 +5,8 @@ import Feather from "react-native-vector-icons/Feather";
 import * as Animatable from 'react-native-animatable';
 import {AuthContext} from '../provider/AuthProvider';
 import SocialButton from '../components/SocialButton';
-
 const SignupScreen=({navigation})=>{
-    const {register}=useContext(AuthContext);
+    const {register,googleLogin}=useContext(AuthContext);
     const [data,setData]=React.useState({
         email:'',
         password:'',
@@ -171,15 +170,15 @@ const SignupScreen=({navigation})=>{
                 btnType='google'
                 color='#de4d41'
                 backgroundColor='#f5e7ea'
-                onPress={()=>{}}
+                onPress={()=>googleLogin()}
                 />
-            <SocialButton
+            {/* <SocialButton
                 buttonTitle="Sign Up with FaceBook"
                 btnType='facebook'
                 color='#4867aa'
                 backgroundColor='#e6eaf4'
                 onPress={()=>{}}
-                />
+                /> */}
             </View>
             ):null}
             <TouchableOpacity onPress={()=>navigation.navigate('Signin')} >

@@ -29,32 +29,34 @@ const HomeScreen = () => {
     longitude: 0,
   });
   useEffect(() => {
-    () => {
-      RNLocation.configure({distanceFilter: 0});
-      RNLocation.getLatestLocation({
-        timeout: 60000,
-        maxWaitTime: 50000,
-      }).then(latestLocation => {
-        console.log(latestLocation);
-        setCoords({
-          latitude: latestLocation.latitude,
-          longitude: latestLocation.longitude,
-        });
-        axios
-          .get(
-            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latestLocation.latitude}&longitude=${latestLocation.longitude}&localityLanguage=en`,
-          )
-          .then(function (response) {
-            console.log(response);
-            console.log(typeof response);
-          })
-          .catch(function (error) {
-            // handle error
-            console.log(error);
-          });
-      });
-    };
+    startup();
   }, []);
+  const startup = async () => {
+    await RNLocation.configure({distanceFilter: 0});
+    await RNLocation.getLatestLocation({
+      timeout: 60000,
+      maxWaitTime: 50000,
+    }).then(latestLocation => {
+      console.log(latestLocation);
+      setCoords({
+        latitude: latestLocation.latitude,
+        longitude: latestLocation.longitude,
+      });
+      axios
+        .get(
+          `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latestLocation.latitude}&longitude=${latestLocation.longitude}&localityLanguage=en`,
+        )
+        .then(function (response) {
+          console.log(response);
+          console.log(typeof response);
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        });
+    });
+  };
+
   return (
     <View style={styles.screen}>
       <View />

@@ -3,6 +3,7 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.github.reactnativecommunity.location.RNLocationPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.facebook.react.ReactInstanceManager;
@@ -27,9 +28,11 @@ public class MainApplication extends Application implements ReactApplication {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
-           //packages.add(new MainReactPackage());
+           //packages.add(new MainReactPackage(),
+           // packages.add(new RNLocationPackage());
            
            packages.add(new LinearGradientPackage());
+           //packages.add(new ReactNativeFirebaseDatabasePackage());
            //packages.add( new ReactNativeFirebaseAuthPackage());
            //packages.add(new AsyncStoragePackage());
           return packages;

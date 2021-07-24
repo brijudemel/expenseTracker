@@ -3,6 +3,7 @@ import React from 'react';
 import {enableScreens} from 'react-native-screens';
 import Route from "./src/Route";
 import {AuthProvider,AuthContext} from './src/provider/AuthProvider';
+
 enableScreens();
 const App=()=> {
   return (

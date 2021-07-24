@@ -128,13 +128,13 @@ const SigninScreen=({navigation})=>{
                     backgroundColor='#f5e7ea'
                     onPress={()=>googleLogin()}
                     />
-                <SocialButton
+                {/* <SocialButton
                     buttonTitle="Sign In with FaceBook"
                     btnType='facebook'
                     color='#4867aa'
                     backgroundColor='#e6eaf4'
                     onPress={()=>{}}
-                    />
+                    /> */}
             </View>
             ):null}
             <TouchableOpacity onPress={()=>navigation.navigate('Signup')} >

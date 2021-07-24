@@ -19,22 +19,23 @@ const AuthStack=()=>{
         if(launched==null){
             try{
             await AsyncStorage.setItem("@alreadyLaunched", "true");
-            setIsFirstLaunch(true);
+            return ()=>{setIsFirstLaunch(true)}
+            
             }
             catch(e)
             {
                 console.log(e)
             }
         }
-        else{setIsFirstLaunch(false)}
-        GoogleSignin.configure({
-            webClientId: '166510516586-cvmpb4bq6ki2c0sri4lof9na7ckahuov.apps.googleusercontent.com',
-          });
+        else{return ()=>{setIsFirstLaunch(false)}}
     }
     catch(e){
         console.log(e);
     }
     }, []);
+    GoogleSignin.configure({
+        webClientId: '166510516586-cvmpb4bq6ki2c0sri4lof9na7ckahuov.apps.googleusercontent.com',
+      });
     return(
         <Stack.Navigator>
         {isFirstLaunch?<Stack.Screen name="Splash" component={SplashScreen} options={()=>({
