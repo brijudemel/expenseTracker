@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Card, Title, TextInput, Button} from 'react-native-paper';
 import {Picker} from '@react-native-picker/picker';
 import {DataContext} from '../provider/DataProvider';

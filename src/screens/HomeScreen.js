@@ -1,22 +1,52 @@
-import React, {useEffect, useState, useContext} from 'react';
-import RNLocation from 'react-native-location';
-import axios from 'axios';
-import {StyleSheet, Text, View, TouchableOpacity, FlatList} from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
+import React, {useEffect, useState, useContext, useMemo, useRef} from 'react';
+import {StyleSheet, Text, View, FlatList} from 'react-native';
 import {FAB, Portal} from 'react-native-paper';
-import database from '@react-native-firebase/database';
 import {AuthContext} from '../provider/AuthProvider';
+import {DataContext} from '../provider/DataProvider';
+// eslint-disable-next-line react-hooks/exhaustive-deps
+//const useComponentWillMount = func => useMemo(func, []);
+const useComponentWillMount = func => {
+  const willMount = useRef(true);
+
+  if (willMount.current) {
+    func();
+  }
+
+  willMount.current = false;
+};
+
 const HomeScreen = ({navigation}) => {
   const [state, setState] = useState({open: false});
 
   const onStateChange = ({open}) => setState({open});
   const {user} = useContext(AuthContext);
+  const {data, readData} = useContext(DataContext);
   const {open} = state;
+  useEffect(() => {
+    // setTimeout(() => {
 
+    // }, 2000);
+    readData(user.uid);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  // useComponentWillMount(() => {
+  //   setTimeout(() => {
+  //     readData(user.uid);
+  //   }, 2000);
+  // });
   return (
     <View style={styles.screen}>
       <Text>Home Screen </Text>
-      <FlatList />
+      <FlatList
+        data={data}
+        renderItem={({amount, expSource}) => (
+          <Text>
+            ExpSource:{expSource} amount:{amount}
+          </Text>
+        )}
+        keyExtractor={() => Math.floor(1000 + Math.random() * 9000)}
+      />
       <View>
         <Portal>
           <FAB.Group
