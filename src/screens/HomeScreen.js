@@ -1,50 +1,25 @@
-import React, {useEffect, useState, useContext, useMemo, useRef} from 'react';
+import React, {useState, useContext} from 'react';
 import {StyleSheet, Text, View, FlatList} from 'react-native';
 import {FAB, Portal} from 'react-native-paper';
-import {AuthContext} from '../provider/AuthProvider';
 import {DataContext} from '../provider/DataProvider';
-// eslint-disable-next-line react-hooks/exhaustive-deps
-//const useComponentWillMount = func => useMemo(func, []);
-const useComponentWillMount = func => {
-  const willMount = useRef(true);
-
-  if (willMount.current) {
-    func();
-  }
-
-  willMount.current = false;
-};
-
 const HomeScreen = ({navigation}) => {
   const [state, setState] = useState({open: false});
 
   const onStateChange = ({open}) => setState({open});
-  const {user} = useContext(AuthContext);
-  const {data, readData} = useContext(DataContext);
+  const {data} = useContext(DataContext);
   const {open} = state;
-  useEffect(() => {
-    // setTimeout(() => {
-
-    // }, 2000);
-    readData(user.uid);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  // useComponentWillMount(() => {
-  //   setTimeout(() => {
-  //     readData(user.uid);
-  //   }, 2000);
-  // });
   return (
     <View style={styles.screen}>
       <Text>Home Screen </Text>
       <FlatList
         data={data}
-        renderItem={({amount, expSource}) => (
-          <Text>
-            ExpSource:{expSource} amount:{amount}
-          </Text>
-        )}
+        renderItem={({item}) => {
+          return (
+            <Text>
+              ExpSource:{item.expSource} amount:{item.amount}
+            </Text>
+          );
+        }}
         keyExtractor={() => Math.floor(1000 + Math.random() * 9000)}
       />
       <View>

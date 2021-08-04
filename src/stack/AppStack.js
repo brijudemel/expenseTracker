@@ -4,11 +4,15 @@ import ProfileScreen from '../screens/ProfileScreen';
 import StatsScreen from '../screens/StatsScreen';
 import AddIncomeScreen from '../screens/AddIncomeScreen';
 import AddExpenseScreen from '../screens/AddExpenseScreen';
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import Icon2 from 'react-native-vector-icons/Entypo';
 import Icon3 from 'react-native-vector-icons/Ionicons';
 import {createStackNavigator} from '@react-navigation/stack';
+import {AuthContext} from '../provider/AuthProvider';
+import {DataContext} from '../provider/DataProvider';
+import LottieView from 'lottie-react-native';
+
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 const FormStack = () => {
@@ -25,7 +29,21 @@ const FormStack = () => {
   );
 };
 const AppStack = () => {
-  return (
+  const {user} = useContext(AuthContext);
+  const {readData, isLoading} = useContext(DataContext);
+  useEffect(() => {
+    readData(user.uid);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return isLoading ? (
+    <LottieView
+      // eslint-disable-next-line react-native/no-inline-styles
+      style={{backgroundColor: 'white'}}
+      source={require('../assets/graph_anim.json')}
+      autoPlay
+      loop
+    />
+  ) : (
     <Tab.Navigator
       initialRouteName="Home"
       tabBarOptions={{

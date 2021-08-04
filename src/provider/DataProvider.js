@@ -1,37 +1,32 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  useMemo,
-} from 'react';
+import React, {createContext, useEffect, useState} from 'react';
 import database from '@react-native-firebase/database';
-import {AuthContext} from './AuthProvider';
 export const DataContext = createContext();
 
 export const DataProvider = ({children}) => {
   const [data, setData] = useState([]);
-  //const {user} = useContext(AuthContext);
-  //const id = user.uid;
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     fetchData(user.uid);
-  //   }, 2000);
-  // });
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchData = async Id => {
+    setIsLoading(true);
     await database()
       .ref('/users/' + Id + '/data')
       .once('value')
-      .then(snapshot => {
+      .then(async snapshot => {
         console.log('User data: ', snapshot.val());
         setData(snapshot.val());
-        console.log(data);
+
+        // console.log(data);
       });
   };
+  useEffect(() => {
+    setIsLoading(false);
+  }, [data]);
+
   return (
     <DataContext.Provider
       value={{
+        isLoading,
+        setIsLoading,
         data,
         setData,
         writeData: async Id => {
