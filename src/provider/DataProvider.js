@@ -5,7 +5,9 @@ export const DataContext = createContext();
 export const DataProvider = ({children}) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [income, setIncome] = useState([]);
+  // const [totalIncome, setTotalIncome] = useState(0);
+  // const [totalExpense, setTotalExpense] = useState(0);
   const fetchData = async Id => {
     setIsLoading(true);
     await database()
@@ -17,10 +19,28 @@ export const DataProvider = ({children}) => {
 
         // console.log(data);
       });
+    // data.forEach(arrayItem => {
+    //   setTotalExpense(prev => prev + arrayItem.amount);
+    // });
   };
+  const fetchIncome = async Id => {
+    setIsLoading(true);
+    await database()
+      .ref('/users/' + Id + '/income')
+      .once('value')
+      .then(async snapshot => {
+        console.log('User income: ', snapshot.val());
+        setIncome(snapshot.val());
+        //console.log(income);
+      });
+    // income.forEach(arrayItem => {
+    //   setTotalIncome(prev => prev + arrayItem.incAmount);
+    // });
+  };
+
   useEffect(() => {
     setIsLoading(false);
-  }, [data]);
+  }, [data, income]);
 
   return (
     <DataContext.Provider
@@ -29,6 +49,10 @@ export const DataProvider = ({children}) => {
         setIsLoading,
         data,
         setData,
+        income,
+        setIncome,
+        // totalExpense,
+        // totalIncome,
         writeData: async Id => {
           await database()
             .ref('users/' + Id)
@@ -36,6 +60,14 @@ export const DataProvider = ({children}) => {
         },
         readData: async Id => {
           fetchData(Id);
+        },
+        writeIncome: async Id => {
+          await database()
+            .ref('users/' + Id)
+            .update({income: income});
+        },
+        readIncome: async Id => {
+          fetchIncome(Id);
         },
       }}>
       {children}

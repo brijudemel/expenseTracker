@@ -30,9 +30,10 @@ const FormStack = () => {
 };
 const AppStack = () => {
   const {user} = useContext(AuthContext);
-  const {readData, isLoading} = useContext(DataContext);
+  const {readData, isLoading, readIncome} = useContext(DataContext);
   useEffect(() => {
     readData(user.uid);
+    readIncome(user.uid); //////////////////////////////////////////////////////////////////////////////////////////
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return isLoading ? (

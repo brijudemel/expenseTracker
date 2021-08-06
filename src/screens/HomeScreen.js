@@ -1,26 +1,46 @@
 import React, {useState, useContext} from 'react';
-import {StyleSheet, Text, View, FlatList} from 'react-native';
+import {StyleSheet, View, FlatList, Text} from 'react-native';
 import {FAB, Portal, Title} from 'react-native-paper';
 import {DataContext} from '../provider/DataProvider';
 import ExpenseCard from '../components/ExpenseCard';
+import IncomeCard from '../components/IncomeCard';
+import VirtualizedView from '../components/Virtualizedview';
 const HomeScreen = ({navigation}) => {
   const [state, setState] = useState({open: false});
   const onStateChange = ({open}) => setState({open});
-  const {data} = useContext(DataContext);
+  const {data, income} = useContext(DataContext);
   const {open} = state;
   return (
     <View style={styles.screen}>
       <Title style={styles.mainTitle}>Expense & Income</Title>
       <View style={styles.innerView}>
-        <FlatList
-          data={data}
-          renderItem={({item}) => {
-            return (
-              <ExpenseCard expSource={item.expSource} amount={item.amount} />
-            );
-          }}
-          keyExtractor={() => Math.floor(1000 + Math.random() * 9000)}
-        />
+        <VirtualizedView>
+          <FlatList
+            listKey="income"
+            scrollEnabled={false}
+            data={income}
+            renderItem={({item}) => {
+              return (
+                <IncomeCard
+                  incSource={item.incSource}
+                  incAmount={item.incAmount}
+                />
+              );
+            }}
+            keyExtractor={() => Math.floor(1000 + Math.random() * 9000)}
+          />
+          <FlatList
+            listKey="expense"
+            scrollEnabled={false}
+            data={data}
+            renderItem={({item}) => {
+              return (
+                <ExpenseCard expSource={item.expSource} amount={item.amount} />
+              );
+            }}
+            keyExtractor={() => Math.floor(1000 + Math.random() * 9000)}
+          />
+        </VirtualizedView>
         <View>
           <Portal>
             <FAB.Group

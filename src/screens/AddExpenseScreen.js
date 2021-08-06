@@ -101,6 +101,9 @@ const AddExpenseScreen = () => {
                     amount: amount,
                   },
                 ]);
+                setAmount('');
+                setOther('');
+                setSelectedSource('');
                 //console.log(data);
               }}>
               Add

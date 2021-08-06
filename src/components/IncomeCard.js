@@ -1,22 +1,20 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Card, Title, Paragraph} from 'react-native-paper';
-const ExpenseCard = ({expSource, amount}) => {
+const IncomeCard = ({incSource, incAmount}) => {
   return (
     <View>
       <Card style={styles.card}>
         <Card.Content>
           <View style={styles.topRow}>
             <Title>
-              {expSource === 'fv'
-                ? 'Fruits & Vegetables'
-                : expSource.charAt(0).toUpperCase() + expSource.slice(1)}
+              {incSource.charAt(0).toUpperCase() + incSource.slice(1)}
             </Title>
-            <Paragraph style={styles.expense}>Expense</Paragraph>
+            <Paragraph style={styles.expense}>Income</Paragraph>
           </View>
           <View style={styles.bottomRow}>
             <Paragraph style={styles.amtText}>Amount</Paragraph>
-            <Paragraph style={styles.amount}>₹{amount}</Paragraph>
+            <Paragraph style={styles.amount}>₹{incAmount}</Paragraph>
           </View>
         </Card.Content>
       </Card>
@@ -35,7 +33,7 @@ const styles = StyleSheet.create({
     marginTop: 7,
   },
   expense: {
-    color: 'red',
+    color: 'green',
   },
   amtText: {
     fontSize: 20,
@@ -48,4 +46,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ExpenseCard;
+export default IncomeCard;

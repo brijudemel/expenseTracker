@@ -1,10 +1,18 @@
-import React, {useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Card, Title, TextInput, Button} from 'react-native-paper';
-
+import {DataContext} from '../provider/DataProvider';
+import {AuthContext} from '../provider/AuthProvider';
 const AddIncomeScreen = () => {
   const [source, setSource] = useState('');
   const [amount, setAmount] = useState('');
+  const {user} = useContext(AuthContext);
+  const {writeIncome, setIncome, income} = useContext(DataContext);
+  useEffect(() => {
+    writeIncome(user.uid);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [income]);
+
   return (
     <View>
       <Card style={styles.card}>
@@ -32,7 +40,18 @@ const AddIncomeScreen = () => {
               color="#009387"
               icon="pencil-plus"
               mode="contained"
-              onPress={() => console.log('Pressed')}>
+              onPress={async () => {
+                await setIncome(prev => [
+                  ...prev,
+                  {
+                    incSource: source,
+                    incAmount: amount,
+                  },
+                ]);
+                //console.log(income);
+                setSource('');
+                setAmount('');
+              }}>
               Add
             </Button>
           </View>
